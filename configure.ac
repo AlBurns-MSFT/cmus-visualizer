@@ -1,0 +1,106 @@
+AC_INIT([cmusvis], [m4_esyscmd_s([git describe --always --tags --dirty])], [karl@stavestrand.no])
+AM_INIT_AUTOMAKE([subdir-objects -Wall -Werror foreign])
+dnl AC_CONFIG_MACRO_DIRS([m4])
+AM_PROG_AR
+LT_INIT
+AC_PROG_CC
+AC_PROG_CC_STDC
+
+AM_PROG_LIBTOOL
+
+
+dnl ############################
+dnl checking if debug is enabled
+dnl ############################
+
+AC_ARG_ENABLE([debug],
+  AS_HELP_STRING([--enable-debug],
+    [enable debug messages and frequency table output])
+)
+
+AS_IF([test "x$enable_debug" = "xyes"], [
+  dnl enabling debug mode
+  CPPFLAGS="$CPPFLAGS -DDEBUG"
+])
+
+
+
+dnl ######################
+dnl checking for pthread
+dnl ######################
+
+AC_CHECK_HEADERS([pthread.h],
+	AC_CHECK_LIB(pthread, pthread_create, LIBS="$LIBS -lpthread",
+		AC_MSG_ERROR([pthread.h found but there is no pthread library to make use of])
+	),
+	AC_MSG_ERROR([no pthread.h header header file found])
+)
+
+dnl ######################
+dnl checking for pulse dev
+dnl ######################
+AC_CHECK_LIB(pulse-simple, pa_simple_new, have_pulse=yes, have_pulse=no)
+    if [[ $have_pulse = "yes" ]] ; then
+      LIBS="$LIBS -lpulse-simple -lpulse"
+      CPPFLAGS="$CPPFLAGS -DPULSE"
+    fi
+
+    if [[ $have_pulse = "no" ]] ; then
+      AC_MSG_NOTICE([WARNING: No pusleaudio dev files found building without pulseaudio support])
+    fi
+
+dnl ######################
+dnl checking for math lib
+dnl ######################
+AC_CHECK_LIB(m, sqrt, have_m=yes, have_m=no)
+    if [[ $have_m = "yes" ]] ; then
+      LIBS="$LIBS -lm"
+    fi
+
+    if [[ $have_m = "no" ]] ; then
+      AC_MSG_ERROR([math library is required!])
+    fi
+
+
+dnl ######################
+dnl checking for fftw3 
+dnl ######################
+AC_CHECK_LIB(fftw3,fftw_execute, have_fftw=yes, have_fftw=no)
+    if [[ $have_fftw = "yes" ]] ; then
+      LIBS="$LIBS -lfftw3"
+    fi
+
+    if [[ $have_fftw = "no" ]] ; then
+      AC_MSG_ERROR([fftw library is required!])
+    fi
+
+dnl ######################
+dnl checking for ncursesw
+dnl ######################
+curses_config_bin="ncursesw6-config ncursesw5-config"
+
+AC_PATH_PROGS(CURSES_CONFIG, $curses_config_bin)
+
+AC_CHECK_LIB(ncursesw, initscr,
+	curses_lib=ncursesw
+)
+
+AC_CHECK_LIB($curses_lib, initscr,
+	if test "$CURSES_CONFIG" = "" ; then
+		LIBS="$LIBS -l$curses_lib"
+  		CPPFLAGS="$CPPFLAGS -DNCURSES"
+	fi
+	if test "$CURSES_CONFIG" != "" ; then
+		CPPFLAGS="$CPPFLAGS `$CURSES_CONFIG --cflags` -DNCURSES"
+		LIBS="$LIBS `$CURSES_CONFIG --libs`"
+	fi
+	AC_CHECK_HEADERS([curses.h], , AC_MSG_ERROR([missing curses.h header]))
+	,
+	AC_MSG_NOTICE([WARNING: building without ncursesw support ncursesw is recomended!])
+	)
+
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT
+
+
+

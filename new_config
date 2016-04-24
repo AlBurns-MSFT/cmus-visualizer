@@ -1,0 +1,8 @@
+//Config file for CMUS Visualizer
+100#		Sensitivity setting, can be 0 to 999
+1			Auto-Sensitivity setting
+2			Bar width
+1			Spacing between bars
+yellow#		color the bars will use
+black#		background color for the visualizer
+1#			gravity setting for bar dropping
