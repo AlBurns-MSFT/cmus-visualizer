@@ -1,0 +1,75 @@
+
+##
+# CIS 3238 - Software Design Final Project
+# Group: Alex Burns, Vuk Petrovic, Roman Danylyshyn, Michael Weidner
+#
+# Project type: Open-source contribution
+# Original project: CMUS - C* Music Player
+# Original Github URL: https://github.com/cmus/cmus
+#
+# Newly implemented features:
+#
+# 1. Music visualizer 
+#      - Bar frequency visualizer for audio using Pulseaudio for input using frequency range 50-10KHz	
+#      - Configure file for setting default options for:
+#         * Sensitivity
+#         * Bar width
+#         * Spacing between bars
+#         * Bar color
+#         * Background color 		
+#         * Gravity setting for bar drop rate
+#       - Bars autofill terminal screen and dynamically respond to terminal resize
+#       - User Controls:
+#         * Up Key: Increase sensitivity by 5%
+#         * Down Key: Decrease sensitivity by 5%
+#         * Right Key: Increase bar width by 1
+#         * Left Key: Decrease bar width by 1
+#         * R Key: Reloads config
+#         * B Key: Cycles through background color options
+#         * C Key: Cycles through bar color options
+#         * Q Key: Quit the visualizer
+#        - Added falloff, smoothing, and gravity to provide smoother visualizer performance
+#        - Added autosensitivity to lower bar height if sensitivity value causes bars to exceed terminal 
+#
+# 2. Soundcloud music downloader
+#      - Download a single song, provided a URL in the form "https://soundcloud.com/<song_name>"
+#      	 ex.
+#		:soundcloud scdl -l https://soundcloud.com/skrillex/the-game-el-chapo
+#      - Download an entire playlist provided a URL in the form of "https://soundcloud.com/<username>/sets/<playlist_name>"
+#      	 ex.
+#		:soundcloud scdl -l https://soundcloud.com/sets/dirty-vibe-remixes
+#      - Specify default download directory for future use
+#      	 ex.
+#		:soundcloud default /User/John/soundcloud_downloads/
+#
+#	The next time you download a song, CMUS will prefer to use your default directory unless you specify a new path:
+#
+#	ex.
+#		:soundcloud scdl -l https://soundcloud.com/skrillex/the-game-el-chapo -path /User/John/soundcloud_downloads
+#
+#	The -path argument will create the directory if it does not exist already.
+##
+
+##
+#
+# General CMUS use instructions:
+#
+# To learn basic CMUS use, run the command 'man cmus'
+# For a more in-depth tutorial, run the command 'man cmus tutorial'
+#
+# Minimum necessary steps to test Soundcloud and Visualizer features:
+# 	  - Soundcloud
+#	    1. Start cmus: 'cmus'
+#	    2.
+
+	    *** TO DO ***
+
+##
+
+##
+#
+# Build procedures:
+#
+# To download, configure, and build all dependencies, CMUS, and Soundcloud, and Visualizer features, run:
+#
+#	./CMUS_proj_install.sh
