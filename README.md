@@ -1,5 +1,7 @@
 # cmus-visualizer
 
+Work toying around with an ncurses audio bar visualizer. Works in linux and many other unix distros.
+
 Before I forget to add a separate README, here are the instructions to only install this program:
 * install cmus (or clone from repo)
 * install using apt-get install:
