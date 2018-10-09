@@ -127,7 +127,7 @@ FILE *fp;
 	}
 
 
-	FILE* fp2 = fopen("new_config", "r+");
+	FILE* fp2 = fopen(DATADIR "/new_config", "r");
 
 	char curChar;
 	//advance a line
